@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "TRDB Downloader",
+  "version": "1.2.0",
+  "description": "Detects DASH (.mpd) and HLS (.m3u8) video streams as they play, plus direct .mp4 files, and downloads them with multi-connection downloading.",
+  "minimum_chrome_version": "116",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Open TRDB Downloader",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "src/background/service-worker.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "src/sidepanel/sidepanel.html"
+  },
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "webRequest",
+    "downloads",
+    "offscreen",
+    "tabs",
+    "notifications"
+  ],
+  "host_permissions": ["<all_urls>"]
+}
