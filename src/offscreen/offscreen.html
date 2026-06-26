@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DASH Downloader engine</title>
+</head>
+<body>
+  <!-- mp4box and mux.js must load as classic scripts first so their globals
+       (MP4Box / BoxParser / DataStream, and muxjs) exist before the module runs.
+       mp4box muxes MP4/fMP4; mux.js transmuxes HLS MPEG-TS segments to fMP4. -->
+  <script src="../../vendor/mp4box.all.min.js"></script>
+  <script src="../../vendor/mux.js"></script>
+  <script type="module" src="offscreen.js"></script>
+</body>
+</html>
