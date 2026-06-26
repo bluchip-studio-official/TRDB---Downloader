@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TRDB Downloader</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <img src="../../icons/icon48.png" alt="" width="20" height="20">
+      <span>TRDB Downloader</span>
+    </div>
+    <button id="nav-settings" class="icon-btn" title="Settings" aria-label="Settings">&#9881;</button>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab is-active" data-tab="detected">Detected<span class="badge" id="count-detected" hidden></span></button>
+    <button class="tab" data-tab="downloads">Downloads<span class="badge" id="count-downloads" hidden></span></button>
+    <button class="tab" data-tab="history">History</button>
+  </nav>
+
+  <main>
+    <!-- Detected -->
+    <section id="view-detected" class="view is-active">
+      <div id="detected-list" class="list"></div>
+      <div id="detected-empty" class="empty">
+        <div class="empty-icon">&#128250;</div>
+        <p>No video detected on your open tabs yet.</p>
+        <p class="muted">Play a DASH (<code>.mpd</code>) or HLS (<code>.m3u8</code>) stream, or a direct <code>.mp4</code> file, and it will appear here.</p>
+      </div>
+    </section>
+
+    <!-- Downloads -->
+    <section id="view-downloads" class="view">
+      <div id="downloads-list" class="list"></div>
+      <div id="downloads-empty" class="empty">
+        <div class="empty-icon">&#11015;</div>
+        <p>No active downloads.</p>
+      </div>
+    </section>
+
+    <!-- History -->
+    <section id="view-history" class="view">
+      <div class="list-toolbar">
+        <span class="muted" id="history-count"></span>
+        <button id="history-clear" class="text-btn danger">Clear all</button>
+      </div>
+      <div id="history-list" class="list"></div>
+      <div id="history-empty" class="empty">
+        <div class="empty-icon">&#128220;</div>
+        <p>No downloads yet.</p>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section id="view-settings" class="view">
+      <div class="settings-head">
+        <button id="settings-back" class="text-btn">&#8592; Back</button>
+        <h2>Settings</h2>
+      </div>
+
+      <div class="field">
+        <label>Save location</label>
+        <div class="row">
+          <button id="choose-folder" class="btn">Choose folder&hellip;</button>
+          <span id="folder-name" class="muted ellipsis">Browser Downloads folder</span>
+        </div>
+        <label class="check">
+          <input type="checkbox" id="use-downloads"> Use the browser Downloads folder instead
+        </label>
+        <p class="hint" id="fs-hint">Files stream straight to the folder you pick (handles large videos with low memory).</p>
+      </div>
+
+      <div class="field">
+        <label for="connections">Parallel connections: <strong id="connections-val">5</strong></label>
+        <input type="range" id="connections" min="1" max="16" step="1" value="5">
+        <p class="hint">More connections download faster but use more bandwidth and memory.</p>
+      </div>
+
+      <div class="field">
+        <label for="retries">Per-segment retries</label>
+        <input type="number" id="retries" min="0" max="10" value="3" class="num">
+      </div>
+
+      <div class="field">
+        <label for="filename-template">Filename template</label>
+        <input type="text" id="filename-template" class="text" value="{title}_{height}p">
+        <p class="hint">Tokens: <code>{title}</code> <code>{height}</code> <code>{width}</code> <code>{bandwidth}</code> <code>{quality}</code></p>
+      </div>
+
+      <div class="field">
+        <label class="check"><input type="checkbox" id="auto-detect" checked> Auto-detect DASH, HLS &amp; direct MP4</label>
+        <label class="check"><input type="checkbox" id="hide-drm"> Hide DRM-protected streams</label>
+        <label class="check"><input type="checkbox" id="notify-complete" checked> Notify when a download finishes</label>
+      </div>
+
+      <p class="version muted">TRDB Downloader v1.2.0</p>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <!-- Card template -->
+  <template id="tpl-detected-card">
+    <div class="card">
+      <div class="card-head">
+        <img class="favicon" alt="" width="16" height="16">
+        <span class="domain ellipsis"></span>
+        <button class="icon-btn dismiss" title="Dismiss" aria-label="Dismiss">&#10005;</button>
+      </div>
+      <input class="title-input" type="text" aria-label="Title">
+      <div class="card-status"></div>
+      <div class="card-controls" hidden>
+        <label class="select-label">Quality
+          <select class="quality-select"></select>
+        </label>
+        <label class="select-label audio-row" hidden>Audio
+          <select class="audio-select"></select>
+        </label>
+        <div class="card-actions">
+          <span class="size-est muted"></span>
+          <button class="btn download-btn">Download</button>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script type="module" src="sidepanel.js"></script>
+</body>
+</html>
